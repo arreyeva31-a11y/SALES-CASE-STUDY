@@ -1,0 +1,2163 @@
+{
+  "datasets": [
+    {
+      "name": "store_sales",
+      "displayName": "Store Sales",
+      "config": {
+        "version": "1.1",
+        "source": "retail.store._case_study",
+        "dimensions": [
+          {
+            "displayName": "Sale Date",
+            "format": {
+              "type": "date",
+              "dateFormat": "year_month_day"
+            },
+            "name": "sales_date",
+            "expr": "sales_date",
+            "comment": "Date of the transaction"
+          },
+          {
+            "name": "year",
+            "expr": "year",
+            "displayName": "Year",
+            "comment": "Year of transaction"
+          },
+          {
+            "name": "month_name",
+            "expr": "month_name",
+            "displayName": "Month",
+            "comment": "Month of transaction"
+          },
+          {
+            "name": "day_name",
+            "expr": "day_name",
+            "displayName": "Day",
+            "comment": "Day of week"
+          },
+          {
+            "name": "promotion_flag",
+            "expr": "promotion_flag",
+            "displayName": "Promotion",
+            "comment": "Whether sale was during promotion"
+          }
+        ],
+        "measures": [
+          {
+            "displayName": "Total Sales",
+            "format": {
+              "type": "currency",
+              "currencyCode": "ZAR",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            },
+            "name": "total_sales",
+            "expr": "SUM(sales)",
+            "comment": "Sum of all sales revenue"
+          },
+          {
+            "displayName": "Total Cost",
+            "format": {
+              "type": "currency",
+              "currencyCode": "ZAR",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            },
+            "name": "total_cost",
+            "expr": "SUM(cost_of_sales)",
+            "comment": "Sum of cost of sales"
+          },
+          {
+            "name": "total_quantity",
+            "expr": "SUM(quantity_sold)",
+            "displayName": "Total Quantity Sold",
+            "comment": "Total units sold"
+          },
+          {
+            "name": "transaction_count",
+            "expr": "COUNT(*)",
+            "displayName": "Transaction Count",
+            "comment": "Number of transactions"
+          },
+          {
+            "displayName": "Gross Profit",
+            "format": {
+              "type": "currency",
+              "currencyCode": "ZAR",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            },
+            "name": "gross_profit",
+            "expr": "SUM(gross_profit)",
+            "comment": "Total profit (sales minus cost)"
+          },
+          {
+            "displayName": "Avg Profit Margin %",
+            "format": {
+              "type": "percentage",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            },
+            "name": "avg_profit_margin",
+            "expr": "AVG(gross_profit_percentage)",
+            "comment": "Average profit margin percentage"
+          },
+          {
+            "displayName": "Avg Unit Price",
+            "format": {
+              "type": "currency",
+              "currencyCode": "ZAR",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            },
+            "name": "avg_unit_price",
+            "expr": "AVG(unit_sales_price)",
+            "comment": "Average selling price per unit"
+          },
+          {
+            "displayName": "Avg Unit Cost",
+            "format": {
+              "type": "currency",
+              "currencyCode": "ZAR",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            },
+            "name": "avg_unit_cost",
+            "expr": "AVG(cost_per_unit)",
+            "comment": "Average cost per unit"
+          },
+          {
+            "displayName": "Avg Profit Per Unit",
+            "format": {
+              "type": "currency",
+              "currencyCode": "ZAR",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 2.0
+              }
+            },
+            "name": "avg_profit_per_unit",
+            "expr": "AVG(profit_per_unit)",
+            "comment": "Average profit per unit sold"
+          }
+        ]
+      }
+    }
+  ],
+  "pages": [
+    {
+      "name": "61522c15",
+      "displayName": "databric dashboard sales",
+      "layout": [
+        {
+          "widget": {
+            "name": "total_sales_counter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Sales"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(total_sales)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "gross_profit_counter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(gross_profit)",
+                      "expression": "MEASURE(`gross_profit`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Gross Profit"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(gross_profit)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "profit_margin_counter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(avg_profit_margin)",
+                      "expression": "MEASURE(`avg_profit_margin`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Avg Profit Margin"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(avg_profit_margin)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "quantity_counter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(total_quantity)",
+                      "expression": "MEASURE(`total_quantity`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Units Sold"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(total_quantity)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "sales_by_year",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Sales by Year"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_sales)",
+                  "displayName": "total_sales",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "sales_by_month",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "month_name",
+                      "expression": "`month_name`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Sales by Month"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "month_name",
+                  "displayName": "month_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_sales)",
+                  "displayName": "total_sales",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "month_name",
+                  "displayName": "month_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 4,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "profit_by_year",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(gross_profit)",
+                      "expression": "MEASURE(`gross_profit`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Profit by Year"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(gross_profit)",
+                  "displayName": "gross_profit",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "sales_by_promotion",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    },
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Sales by Promotion"
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "measure(total_sales)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Total Sales"
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "Promotion",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 20,
+            "width": 4,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "margin_by_promotion",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    },
+                    {
+                      "name": "measure(avg_profit_margin)",
+                      "expression": "MEASURE(`avg_profit_margin`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Profit Margin: Promotion vs Normal"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(avg_profit_margin)",
+                  "displayName": "avg_profit_margin",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 20,
+            "width": 4,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "quantity_by_promotion",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    },
+                    {
+                      "name": "measure(total_quantity)",
+                      "expression": "MEASURE(`total_quantity`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Quantity Sold: Promotion vs Normal"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_quantity)",
+                  "displayName": "total_quantity",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 28,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "unit_price_by_promotion",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    },
+                    {
+                      "name": "measure(avg_unit_price)",
+                      "expression": "MEASURE(`avg_unit_price`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Avg Unit Price: Promotion vs Normal"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(avg_unit_price)",
+                  "displayName": "avg_unit_price",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 28,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "profit_by_promotion",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    },
+                    {
+                      "name": "measure(gross_profit)",
+                      "expression": "MEASURE(`gross_profit`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Gross Profit: Promotion vs Normal"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(gross_profit)",
+                  "displayName": "gross_profit",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 20,
+            "width": 4,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "yoy_comparison_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    },
+                    {
+                      "name": "measure(gross_profit)",
+                      "expression": "MEASURE(`gross_profit`)"
+                    },
+                    {
+                      "name": "measure(avg_profit_margin)",
+                      "expression": "MEASURE(`avg_profit_margin`)"
+                    },
+                    {
+                      "name": "measure(total_quantity)",
+                      "expression": "MEASURE(`total_quantity`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Year-by-Year Metrics Comparison"
+              },
+              "version": 1,
+              "widgetType": "combo",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "Year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "primary": {
+                    "fields": [
+                      {
+                        "fieldName": "measure(total_sales)",
+                        "displayName": "Total Sales"
+                      },
+                      {
+                        "fieldName": "measure(gross_profit)",
+                        "displayName": "Gross Profit"
+                      }
+                    ]
+                  },
+                  "secondary": {
+                    "fields": [
+                      {
+                        "fieldName": "measure(avg_profit_margin)",
+                        "displayName": "Avg Profit Margin"
+                      },
+                      {
+                        "fieldName": "measure(total_quantity)",
+                        "displayName": "Total Quantity"
+                      }
+                    ]
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 44,
+            "width": 12,
+            "height": 10
+          }
+        },
+        {
+          "widget": {
+            "name": "sales_comparison",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Sales: Current vs Prior Year"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_sales)",
+                  "displayName": "total_sales",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 36,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "yoy_growth_summary",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Year-over-Year Trends\n",
+                "\n",
+                "**2014**: Peak performance year with R75.4M in sales\n",
+                "\n",
+                "**2015**: -15.1% decline to R64.0M\n",
+                "\n",
+                "**2016**: -26.6% decline to R47.0M\n",
+                "\n",
+                "**Key Insight**: Sales have declined 37.7% from 2014 peak, indicating sustained downward trend requiring strategic intervention."
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 54,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "multi_year_trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Multi-Year Sales & Profit Trend",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_sales)",
+                  "displayName": "total_sales",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 12,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "quantity_trend",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_quantity)",
+                      "expression": "MEASURE(`total_quantity`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Quantity Sold Trend",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_quantity)",
+                  "displayName": "total_quantity",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 36,
+            "width": 6,
+            "height": 8
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "754a9bcc",
+      "displayName": "databric dashboard sales 1",
+      "layout": [
+        {
+          "widget": {
+            "name": "51f1932f",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Sales"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(total_sales)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "d1106a4e",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(gross_profit)",
+                      "expression": "MEASURE(`gross_profit`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Gross Profit"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(gross_profit)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "772a7958",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(avg_profit_margin)",
+                      "expression": "MEASURE(`avg_profit_margin`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Avg Profit Margin"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(avg_profit_margin)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "cef27d33",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(total_quantity)",
+                      "expression": "MEASURE(`total_quantity`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Total Units Sold"
+              },
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "measure(total_quantity)",
+                  "rowNumber": 0
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 3,
+            "height": 4
+          }
+        },
+        {
+          "widget": {
+            "name": "b266366e",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Sales by Year"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_sales)",
+                  "displayName": "total_sales",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "6c19a234",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "month_name",
+                      "expression": "`month_name`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Sales by Month"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "month_name",
+                  "displayName": "month_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_sales)",
+                  "displayName": "total_sales",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "month_name",
+                  "displayName": "month_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 4,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "cdc24f58",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(gross_profit)",
+                      "expression": "MEASURE(`gross_profit`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Profit by Year"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(gross_profit)",
+                  "displayName": "gross_profit",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "7ad649c9",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    },
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Sales by Promotion"
+              },
+              "version": 3,
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "measure(total_sales)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Total Sales"
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "Promotion",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 20,
+            "width": 4,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "d98d1ea0",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    },
+                    {
+                      "name": "measure(avg_profit_margin)",
+                      "expression": "MEASURE(`avg_profit_margin`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Profit Margin: Promotion vs Normal"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(avg_profit_margin)",
+                  "displayName": "avg_profit_margin",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 20,
+            "width": 4,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "a2ac8329",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    },
+                    {
+                      "name": "measure(total_quantity)",
+                      "expression": "MEASURE(`total_quantity`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Quantity Sold: Promotion vs Normal"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_quantity)",
+                  "displayName": "total_quantity",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 28,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "124169e1",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    },
+                    {
+                      "name": "measure(avg_unit_price)",
+                      "expression": "MEASURE(`avg_unit_price`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Avg Unit Price: Promotion vs Normal"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(avg_unit_price)",
+                  "displayName": "avg_unit_price",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 28,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "264eb0be",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "promotion_flag",
+                      "expression": "`promotion_flag`"
+                    },
+                    {
+                      "name": "measure(gross_profit)",
+                      "expression": "MEASURE(`gross_profit`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Gross Profit: Promotion vs Normal"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(gross_profit)",
+                  "displayName": "gross_profit",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "promotion_flag",
+                  "displayName": "promotion_flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 20,
+            "width": 4,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "9f43cb21",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    },
+                    {
+                      "name": "measure(gross_profit)",
+                      "expression": "MEASURE(`gross_profit`)"
+                    },
+                    {
+                      "name": "measure(avg_profit_margin)",
+                      "expression": "MEASURE(`avg_profit_margin`)"
+                    },
+                    {
+                      "name": "measure(total_quantity)",
+                      "expression": "MEASURE(`total_quantity`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Year-by-Year Metrics Comparison"
+              },
+              "version": 1,
+              "widgetType": "combo",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "Year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "primary": {
+                    "fields": [
+                      {
+                        "fieldName": "measure(total_sales)",
+                        "displayName": "Total Sales"
+                      },
+                      {
+                        "fieldName": "measure(gross_profit)",
+                        "displayName": "Gross Profit"
+                      }
+                    ]
+                  },
+                  "secondary": {
+                    "fields": [
+                      {
+                        "fieldName": "measure(avg_profit_margin)",
+                        "displayName": "Avg Profit Margin"
+                      },
+                      {
+                        "fieldName": "measure(total_quantity)",
+                        "displayName": "Total Quantity"
+                      }
+                    ]
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 44,
+            "width": 12,
+            "height": 10
+          }
+        },
+        {
+          "widget": {
+            "name": "1bc89ca3",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": "Sales: Current vs Prior Year"
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_sales)",
+                  "displayName": "total_sales",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 36,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "f9476516",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_sales)",
+                      "expression": "MEASURE(`total_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Multi-Year Sales & Profit Trend",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_sales)",
+                  "displayName": "total_sales",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 12,
+            "width": 6,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "b372e335",
+            "multilineTextboxSpec": {
+              "lines": [
+                "## Year-over-Year Trends\n",
+                "\n",
+                "**2014**: Peak performance year with R75.4M in sales\n",
+                "\n",
+                "**2015**: -15.1% decline to R64.0M\n",
+                "\n",
+                "**2016**: -26.6% decline to R47.0M\n",
+                "\n",
+                "**Key Insight**: Sales have declined 37.7% from 2014 peak, indicating sustained downward trend requiring strategic intervention."
+              ]
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 54,
+            "width": 12,
+            "height": 8
+          }
+        },
+        {
+          "widget": {
+            "name": "d38639ba",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "store_sales",
+                  "fields": [
+                    {
+                      "name": "year",
+                      "expression": "`year`"
+                    },
+                    {
+                      "name": "measure(total_quantity)",
+                      "expression": "MEASURE(`total_quantity`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Quantity Sold Trend",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "measure(total_quantity)",
+                  "displayName": "total_quantity",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "year",
+                  "displayName": "year",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 36,
+            "width": 6,
+            "height": 8
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "CENTER"
+    },
+    "applyModeEnabled": false
+  }
+}
